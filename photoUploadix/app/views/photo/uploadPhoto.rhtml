@@ -1,0 +1,9 @@
+<h1>Photo Upload</h1>
+<%= form_for '@Photo', :url => { :action => "upload" },:html => {:id=>"uploadPhotoForm",:multipart => true} do |f| %>
+File types allowed : .. <br />
+Description: <%= f.text_field :description %> <br />
+Private? : <%= check_box_tag "@Photo[isPrivate]" %> <br />
+Select a photo: <%= file_field :upload, :photo %> <br />
+<%= f.submit "Upload your photo" %>
+<% end %>
+

@@ -26,15 +26,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `photo`
 --
 
-CREATE TABLE IF NOT EXISTS `photos` (
+CREATE TABLE `photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `description` varchar(512) NOT NULL,
-  `fileExtension` varchar(256) NOT NULL,
+  `fileType` varchar(30) DEFAULT NULL,
   `path` varchar(128) NOT NULL,
   `isPrivate` tinyint(1) NOT NULL,
+  `dateUploaded` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 -- --------------------------------------------------------
 
