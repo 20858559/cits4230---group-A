@@ -1,0 +1,28 @@
+mysql -u cits4230f -pseEk72es -h cits4230.csse.uwa.edu.au cits4230f
+
+http://stackoverflow.com/questions/7878662/how-to-display-ruby-on-rails-form-validation-error-messages-one-at-a-time
+
+
+allowedContentTypes = %w[image/bmp image/gif image/jpeg image/pjpeg image/png]
+		if allowedContentTypes.include? newPhoto['photo'].content_type
+			return "Error, the file type "+ newPhoto['photo'].content_type + " is incorrect"
+		else
+
+			#upload the file
+			directory = "public/photos"
+			path = File.join(directory, name)
+			File.open(path, "wb") { |f| f.write(newPhoto['datafile'].read) }
+			#check if file was correctly uploaded
+
+			#insert the record :id => "1",
+			@p = Photo.new( :name => newPhoto['photo'].original_filename , :description => newPhoto['description'] , :fileType => newPhoto['photo'].content_type, :dateUploaded => "NOW()", :path => "mySuperPath" , :isPrivate => newPhoto['isPrivate'] )
+			if @p.new_record?
+				if @p.save
+           return true
+
+        else
+           return "There was an error"
+        end
+			end
+
+		end

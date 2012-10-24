@@ -1,33 +1,46 @@
 class Photo < ActiveRecord::Base
+  #list of accessible attributes
 	attr_accessible :name
 	attr_accessible :id
 	attr_accessible :description
-	attr_accessible :path
-	attr_accessible :isPrivate
-	attr_accessible :fileType
-	attr_accessible :dateUploaded
-	def self.save(upload)
-		#allowed content types
-		allowedContentTypes = %w[image/bmp image/gif image/jpeg image/pjpeg image/png] 
-		if allowedContentTypes.include? upload['photo'].content_type
-			puts "ERROR"
+	attr_accessible :is_private
+	attr_accessible :file_type
+	attr_accessible :date_uploaded
+
+  #validators
+
+  #required
+  validates_presence_of  :name,:description,:is_private
+
+  #return true , error message if not
+	def self.save(new_photo)
+    #check validation here
+		#allowed content types check if correct
+		allowed_content_types = %w[image/bmp image/gif image/jpeg image/pjpeg image/png]
+		if !allowed_content_types.include? new_photo['upload']['photo'].content_type
+			return "Error, the file type "+ new_photo['upload']['content_type'] + " is incorrect"
 		else
+      
 			#upload the file
 			directory = "public/photos"
 			path = File.join(directory, name)
-			File.open(path, "wb") { |f| f.write(upload['datafile'].read) }
+			File.open(path, "wb") { |f| f.write(new_photo['upload']['photo'].read) }
 			#check if file was correctly uploaded
 
-			#insert the record
-			p = Photo.new(:id => "1", :name => :upload['photo'].original_filename) , :description => "From ror" , :fileType => :upload['photo'].original_filename), :dateUploaded => "NOW()", :path => "mySuperPath" , :isPrivate => "1" )
-			p = Photo.new(:name => :upload['photo'].original_filename)
-			#if p.new_record?
-				p.save
-			#end
+			#insert the record :id => "1",
+			@p = Photo.new( :name => new_photo['upload']['photo'].original_filename , :description => new_photo['@new_photo']['description'] , :file_type => new_photo['upload']['photo'].content_type, :date_uploaded => Time.now , :is_private => new_photo['@new_photo']['is_private'] )
+      #abort(@p.inspect)
+			if @p.new_record?
+				if @p.save
+           return true
+           
+        else
+           return "There was an error"
+        end
+			end
 			
 		end
-		#check that the content type is correct
-		#if upload['photo'].content_type 
+
 
 	end
 end
