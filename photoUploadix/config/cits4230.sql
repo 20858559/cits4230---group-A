@@ -10,42 +10,18 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
 
-DROP TABLE IF EXISTS `albums`;
-DROP TABLE IF EXISTS `photos`;
-DROP TABLE IF EXISTS `albums_photos`;
-DROP TABLE IF EXISTS `users_albums`;
-DROP TABLE IF EXISTS `users`;
-DROP TABLE IF EXISTS `users_photos`;
-DROP TABLE IF EXISTS `users_users`;
-
-
-
-
+DROP DATABASE cits4230f;
+CREATE DATABASE cits4230f;
+USE cits4230f;
 --
--- Database: `cits2430`
+-- Database: `cits4230`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `album`
---
-
-CREATE TABLE `albums` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `description` varchar(1056) NOT NULL,
-  `is_private` tinyint(1) NOT NULL,
-  `image_cover_location` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -59,6 +35,24 @@ CREATE TABLE `photos` (
   `description` varchar(512) NOT NULL,
   `path` varchar(128) NOT NULL,
   `is_private` tinyint(1) NOT NULL,
+  `file_type` varchar(128) NOT NULL,
+  `date_uploaded` DATE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `album`
+--
+
+CREATE TABLE `albums` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `description` varchar(1056) NOT NULL,
+  `is_private` tinyint(1) NOT NULL,
+  `image_cover_location` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

@@ -6,6 +6,7 @@ class Photo < ActiveRecord::Base
 	attr_accessible :is_private
 	attr_accessible :file_type
 	attr_accessible :date_uploaded
+  attr_accessible :path
 
   #validators
 
@@ -22,13 +23,25 @@ class Photo < ActiveRecord::Base
 		else
       
 			#upload the file
-			directory = "public/photos"
-			path = File.join(directory, name)
-			File.open(path, "wb") { |f| f.write(new_photo['upload']['photo'].read) }
+
+      #fake id
+      user_id = "1"
+      #should be global variable ..where?
+      directory = "public/photos"
+      #build user dir
+      user_dir = File.join(directory,user_id)
+      if !File.directory? user_dir 
+        #does not exist we create
+        Dir.mkdir(user_dir,0700)
+      end
+
+      #build file path
+      file_path = File.join(user_dir,new_photo['upload']['photo'].original_filename)
+			File.open(file_path, "wb") { |f| f.write(new_photo['upload']['photo'].read) }
 			#check if file was correctly uploaded
 
 			#insert the record :id => "1",
-			@p = Photo.new( :name => new_photo['upload']['photo'].original_filename , :description => new_photo['@new_photo']['description'] , :file_type => new_photo['upload']['photo'].content_type, :date_uploaded => Time.now , :is_private => new_photo['@new_photo']['is_private'] )
+			@p = Photo.new( :name => new_photo['upload']['photo'].original_filename , :description => new_photo['@new_photo']['description'] , :file_type => new_photo['upload']['photo'].content_type, :date_uploaded => Time.now , :is_private => new_photo['@new_photo']['is_private'],:path => user_dir )
       #abort(@p.inspect)
 			if @p.new_record?
 				if @p.save
