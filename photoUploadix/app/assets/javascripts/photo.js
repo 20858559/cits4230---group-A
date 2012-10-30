@@ -9,9 +9,14 @@ $(document).ready( function() {
                         $(e.imageTarget).click(this.proxy(function(e) {
                                 e.preventDefault(); // removes the garbage
                                 var obj = this.getData();
-                                $.fancybox({
-                                        'href': obj.image
+                                  $.fancybox({
+                                        'href': obj.big,
+                                        'title': obj.title,
+                                        'titlePosition' : "inside"
+                                        
+                                        
                                 });
+                                
                         }))
                 });
         }
