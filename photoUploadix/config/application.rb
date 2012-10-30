@@ -60,7 +60,7 @@ module PhotoUploadix
     config.assets.version = '1.0'
 
     #paperclip options
-    config.paperclip_defaults = {:storage => :fog, :fog_credentials => {:provider => "Local", :local_root => "#{Rails.root}/public/photos"}, :fog_directory => "", :fog_host => "localhost"}
+    #config.paperclip_defaults = {:storage => :fog, :fog_credentials => {:provider => "Local", :local_root => "#{Rails.root}/public/files"}, :fog_directory => "", :fog_host => "localhost"}
 
 
   end

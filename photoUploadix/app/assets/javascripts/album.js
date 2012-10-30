@@ -1,4 +1,4 @@
-nner*";
+var $name = "Banner*";
 var $email = "Schafer14@up.edu";
 
 

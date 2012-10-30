@@ -24,23 +24,22 @@ USE cits4230f;
 --
 
 -- --------------------------------------------------------
-
 --
--- Table structure for table `photo`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `photos` (
+CREATE TABLE  `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `description` varchar(512) NOT NULL,
-  `path` varchar(128) NOT NULL,
-  `is_private` tinyint(1) NOT NULL,
-  `file_type` varchar(128) NOT NULL,
-  `date_uploaded` DATE,
-  PRIMARY KEY (`id`)
+  `first_name` varchar(128) NOT NULL,
+  `last_name` varchar(128) NOT NULL,
+  `login` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `code` int(8) NOT NULL,
+  `registration_token` varchar(256),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
 -- --------------------------------------------------------
 
 --
@@ -56,6 +55,25 @@ CREATE TABLE `albums` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `photo`
+--
+
+CREATE TABLE `photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `photo_file_name` varchar(128) NOT NULL,
+  `description` varchar(512) NOT NULL,
+  `is_private` tinyint(1) NOT NULL,
+  `photo_content_type` varchar(128) NOT NULL,
+  `photo_file_size` int(11),
+  `photo_updated_at` DATE,
+  `user_id` int(11) NULL,
+  `likes` int(11) default 0,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`user_id`) REFERENCES users(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
@@ -73,25 +91,6 @@ CREATE TABLE `albums_photos` (
 
 
 
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE  `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `user_name` varchar(128) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `code` int(8) NOT NULL,
-  `registration_token` varchar(256),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_name` (`user_name`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 -- --------------------------------------------------------
 
 --
@@ -104,21 +103,6 @@ CREATE TABLE `users_albums` (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (album_id) REFERENCES albums(id),
   PRIMARY KEY (user_id,album_id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `userphoto`
---
-
-CREATE TABLE  `users_photos` (
-  `user_id` int(11) NOT NULL,
-  `photo_id` int(11) NOT NULL,
-  `like` tinyint(1) NOT NULL DEFAULT '0',
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (photo_id) REFERENCES photos(id),
-  PRIMARY KEY (user_id,photo_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
