@@ -18,8 +18,9 @@ class Photo < ActiveRecord::Base
   attr_accessible :photo
   has_attached_file :photo,
     :styles => { :large => "800x600>",   :medium => "300x300>", :small =>"250x250>", :thumb => "100x100>" },
-    #user id not the one from the model
-    :url  => "/:hash.:extension",
+    #try to make it work later
+    #:url  => "/:hash.:extension",
+    :url => "/files/:user_id/photos/:id/:style/:basename.:extension",
     :path => ":rails_root/public/files/:user_id/photos/:id/:style/:basename.:extension"
   
 
@@ -27,18 +28,31 @@ class Photo < ActiveRecord::Base
   #validators section
 
   #required attributes
-  validates_presence_of  :description,:is_private
+  validates_presence_of  :description
 
   #paper clip attachment validation
   validates_attachment :photo, :presence => true,
                        :content_type => { :content_type => ["image/bmp","image/gif", "image/jpeg","image/pjpeg","image/png"] },
                        :size => { :less_than => 5.megabytes }
+                       :weird_content
 
+  #imagemagick fixes
+  before_post_process :skip_for_audio
+  before_post_process :skip_for_zip
 
-  # interpolate in paperclip
-Paperclip.interpolates :user_id do |attachment, style|
-  attachment.instance.user_id.to_s
-end
+  def skip_for_audio
+    ! %w(audio/ogg application/ogg audio/wav).include?(photo_content_type)
+  end
+
+  def skip_for_zip
+    ! %w(application/zip).include?(photo_content_type)
+  end
+
+  # define our own path
+  Paperclip.interpolates :user_id do |attachment, style|
+    attachment.instance.user_id.to_s
+  end
+
 
 
 

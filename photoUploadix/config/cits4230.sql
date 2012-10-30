@@ -68,7 +68,7 @@ CREATE TABLE `photos` (
   `is_private` tinyint(1) NOT NULL,
   `photo_content_type` varchar(128) NOT NULL,
   `photo_file_size` int(11),
-  `photo_updated_at` DATE,
+  `photo_updated_at` TIMESTAMP,
   `user_id` int(11) NULL,
   `likes` int(11) default 0,
   PRIMARY KEY (`id`),
@@ -118,6 +118,12 @@ CREATE TABLE  `users_users` (
   foreign key (id_one) references users(id),
   foreign key (id_two) references users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Dummy User....
+
+insert into users (first_name,last_name,login,email,password,code) VALUES ('ae','ewae','ewaw','ewa@s.com','qqqqqq','ewqewq');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
