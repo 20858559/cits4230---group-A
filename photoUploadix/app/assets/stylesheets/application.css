@@ -11,8 +11,7 @@
  *= require_self
  *= require_tree .
 
-    @import "bootstrap";
-    *= require galleria.classic
-    * require fancybox
+*= require galleria.classic
+*= require fancybox
 
 */

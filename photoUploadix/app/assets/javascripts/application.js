@@ -13,8 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-//= require jquery.formvalidator.min.js
 //= require angular.js
-//= require galleria-1.2.8.min.js
-//= require galleria.classic.min.js
-// require fancybox
+//= require bootstrap
+

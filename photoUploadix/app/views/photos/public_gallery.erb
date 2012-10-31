@@ -1,40 +1,28 @@
-<div class="hero-unit">
-  <h1> <%= @user.first_name %> <%= @user.last_name %> 's photos </h1>
-  <br /><br />
-  <div id="user_infos">
-    <div id="user_labels">
-      <span class="label">Login</span> <br />
-      <span class="label">Email</span> <br />
-      <span class="label">Code</span> <br />
-    </div>
-    <div id ="user_data">
-      <span class="data"><%= @user.login %> </span> <br />
-      <span class="data"><%= @user.email %></span> <br />
-      <span class="data"><%= @user.code %></span> <br />
-    </div>
-    
-  </div>
+<%#
+  Show all public pictures
+%>
 
-  <div class="clear"></div>
+<div class="hero-unit">
+  <h1>Welcome to our public gallery!</h1>
   <br /><br />
-  
-    <% if@photos.length>0 %>
+
+    <% if !@photos.nil?  %>
       <div id ="user_gallery">
       <% @photos.each do |photo| %>
          <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>"/photoUploadix/"+photo.photo.url ),"/photoUploadix/"+photo.photo.url(:large) %>
 
       <%  end %>
       </div>
-
     <% else %>
-        <%= "No pictures are available for this user." %>
+    <br /><br />
+        <%= "No pictures are available at this time." %>
     <% end %>
 
+  
 
   <br />
   <br />
 
-  <%= link_to "Home",user_path(@user)  %>
 </div>
 
 <!-- if pictures..display the gallery -->

@@ -1,0 +1,25 @@
+<%= form_for :user, :url => { :action => "../session/create" },:html => {:id=>"loginForm",:onSubmit => "return $(this).validate();", :class =>"navbar-form pull-right"} do |f| %>
+
+
+
+ <%= f.text_field :login,:placeholder=>"Login","data-validation"=>"required",:class => "span2" %>
+ <%= f.password_field :password,:placeholder=>"Password","data-validation"=>"required",:class => "span2" %>
+
+<%= f.submit "Sign in",{:id =>"login",:class =>"btn" } %>
+    <% end %>
+
+<!-- Error handling -->
+
+<% if not @messages_rendered -%>
+  <% if flash[:error] -%>
+    <p class='error' style="float: right;color:red;display:inline-block"><%=h flash[:error] %></p>
+  <% end -%>
+
+<% end -%>
+<% @messages_rendered = true -%>
+
+<script src=" <%= javascript_path('jquery.formvalidator.min.js')  %>" type="text/javascript"></script>
+
+<script>
+	$("#loginForm").validateOnBlur();
+</script>

@@ -51,7 +51,10 @@ CREATE TABLE `albums` (
   `name` varchar(256) NOT NULL,
   `description` varchar(1056) NOT NULL,
   `is_private` tinyint(1) NOT NULL,
-  `image_cover_location` varchar(256) NOT NULL,
+  `photo_cover_id` int(11) NOT NULL,
+  `user_id` int(11),
+  FOREIGN KEY(`user_id`) REFERENCES users(`id`),
+  FOREIGN KEY(`photo_cover_id`) REFERENCES photo(`id`),		
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -79,7 +82,7 @@ CREATE TABLE `photos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `albumphoto`
+-- Table structure for table `album_photo`
 --
 
 CREATE TABLE `albums_photos` (
@@ -108,10 +111,10 @@ CREATE TABLE `users_albums` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `useruser`
+-- Table structure for table `user_user`
 --
 
-CREATE TABLE  `users_users` (
+CREATE TABLE  `friends` (
   `id_one` int(11) NOT NULL,
   `id_two` int(11) NOT NULL,
   `relationship` int(11) NOT NULL,
@@ -122,8 +125,8 @@ CREATE TABLE  `users_users` (
 
 --
 -- Dummy User....
-
-insert into users (first_name,last_name,login,email,password,code) VALUES ('ae','ewae','ewaw','ewa@s.com','qqqqqq','ewqewq');
+-- pw foobar
+insert into users (first_name,last_name,login,email,password,code) VALUES ('ae','ewae','ewaw','ewa@s.com','3858f62230ac3c915f300c664312c63f','ewqewq');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

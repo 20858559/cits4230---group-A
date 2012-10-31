@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   #attr_accessor :password
   attr_accessible :name,:password,:email,:id
 
+
   validates :name,  :presence => true, :uniqueness => true,
                     :length   => { :maximum => 50 }
   validates :email, :presence => true,

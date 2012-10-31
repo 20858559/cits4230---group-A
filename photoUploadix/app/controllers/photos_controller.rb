@@ -1,22 +1,28 @@
 class PhotosController < ApplicationController
 	#index action .. all public photos from db or public + private logged
 	def index
-    #list of photos
-
-    #authorized?
-
-    authorize! :index, @user, :message => 'Not authorized as an administrator.'
-    #get all photos from the user
-    @photos = Photo.where("is_private = false")
+    if session[:user_id].to_s != params[:id]
+      raise ActionController::RoutingError.new('Not Found')
+    end
   end
 
   def edit
     @photo = Photo.find(params[:id])
   end
 
+
+  def public_gallery
+
+    #list of photos
+
+    @photos = Photo.where("is_private = false")
+  end
   
 
   def show
+    if session[:user_id].to_s != params[:id]
+      raise ActionController::RoutingError.new('Not Found')
+    end
     @user = User.find(params[:user_id])
     @photo = Photo.find(params[:id])
   end
@@ -28,7 +34,7 @@ class PhotosController < ApplicationController
     #@photo.user_id = 1
     if @photo.save
       flash[:notice] = "Successfully uploaded photo."
-      redirect_to :action => user_photo
+      redirect_to "/photoUploadix/users/#{session[:user_id]}"
     else
       @photo.photo = nil
       render :action => "new"
