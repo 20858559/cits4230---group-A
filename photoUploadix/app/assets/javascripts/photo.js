@@ -3,6 +3,7 @@ $(document).ready( function() {
 
     $("#uploadPhotoForm").validateOnBlur();
     Galleria.loadTheme('/assets/galleria.classic.min.js');
+    /*
     $('#user-gallery').galleria({
         extend: function() {
                 this.bind(Galleria.LOADFINISH, function(e) {
@@ -21,6 +22,7 @@ $(document).ready( function() {
                 });
         }
     });
+    */
     Galleria.run('#user-gallery');
 
  });

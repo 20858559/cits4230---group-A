@@ -17,4 +17,4 @@
 //= require angular.js
 //= require galleria-1.2.8.min.js
 //= require galleria.classic.min.js
-//= require fancybox
+// require fancybox

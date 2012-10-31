@@ -13,6 +13,6 @@
 
     @import "bootstrap";
     *= require galleria.classic
-    *= require fancybox
+    * require fancybox
 
 */
