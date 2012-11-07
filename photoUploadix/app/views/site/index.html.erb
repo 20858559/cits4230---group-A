@@ -4,7 +4,7 @@
         <h1>Hello, photo lovers!</h1>
         <p>This is a simple photo uploading website,  making it easy for you to send photos around the world, which is great for keeping in touch with loved ones overseas</p>
         <span>
-          <a class="btn btn-primary btn-large">Sign up &raquo;</a>
+           <p><%= link_to "Sign Up!", new_user_path,:class => "btn btn-primary btn-large"  %></p>
           <small>if you are new to our website</small>
         </span>
       </div>
@@ -12,19 +12,19 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
-          <h2>Photo Management</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Find Friends</h2>
+          <p> Browse through the users to find your friends.  </p>
+          <p><%= link_to "Check out our list of user", users_path,:class => "btn"  %></p>
         </div>
         <div class="span4">
-          <h2>Social Networking</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Get Started</h2>
+          <p>Upload some pictures, and let's get started!</p>
+          <p><%= link_to "Register", new_user_path,:class => "btn"  %></p>
        </div>
         <div class="span4">
           <h2>Public Gallery</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <p>View your gallery.</p>
+          <%= link_to "Public gallery", public_gallery_path,:class => "btn"  %>
         </div>
       </div>
 

@@ -1,9 +1,16 @@
 class User < ActiveRecord::Base
+  has_many :friendships
+  has_many :friends, :through => :friendships
+
+
   #attr_accessor :password
-  attr_accessible :name,:password,:email,:id
+  attr_accessible :name,:password,:email,:id,:login,:first_name,:last_name,:password_confirmation
 
+  attr_accessor :password_confirmation
 
-  validates :name,  :presence => true, :uniqueness => true,
+  validates :first_name,  :presence => true,
+                    :length   => { :maximum => 50 }
+  validates :last_name,  :presence => true,
                     :length   => { :maximum => 50 }
   validates :email, :presence => true,
                     :format   => { :with    => /\w+@\w+\.\w+/,
@@ -12,8 +19,8 @@ class User < ActiveRecord::Base
 
 
   validates :password,
-            #:presence     => true,
-            #:confirmation => true,
+            :presence     => true,
+            :confirmation => true,
             :length       => { :within => 6..40 }
 
   #activate this on cits4230 server

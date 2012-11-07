@@ -10,28 +10,20 @@
             <%= link_to 'photoUploadix', root_url,:class=>"brand"  %>
             <div class="nav-collapse collapse">
               <ul class="nav">
-                <li class="active"><%= link_to 'Home', root_url  %></li>
-                <li><a href="#about">Sitemap</a></li>
                 
-              
-              
+
+
+
               <%  if !session[:user_id].nil? %>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Albums <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
+                <%  params[:user_id] = session[:user_id] %>
+                  <li><%= link_to 'Add a photo', "/photoUploadix/users/#{session[:user_id]}/photos/new"  %></li>
+                  <li><%= link_to "Public gallery", public_gallery_path  %> </li>
+                  <li><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
+                  <li><a href="sitemap/sitemap">Sitemap</a></li>
                 </ul>
 
 
-              <%=  
+              <%=
                   @user = User.find(session[:user_id])
                   welcome_text = "Welcome, " + @user.first_name + " " + @user.last_name
                   welcome_text += "&nbsp;&nbsp;"
@@ -40,6 +32,7 @@
 
               %>
               <%else%>
+              <li><a href="sitemap/sitemap">Sitemap</a></li>
             </ul>
               <%=
                 render :partial => 'users/login'
@@ -47,7 +40,7 @@
               <%
                 end
               %>
-              
+
             </div><!--/.nav-collapse -->
           </div>
         </div>

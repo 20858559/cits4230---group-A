@@ -35,34 +35,12 @@ CREATE TABLE  `users` (
   `login` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
-  `code` int(8) NOT NULL,
+  `code` int(8),
   `registration_token` varchar(256),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
--- --------------------------------------------------------
-
---
--- Table structure for table `album`
---
-
-CREATE TABLE `albums` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `description` varchar(1056) NOT NULL,
-  `is_private` tinyint(1) NOT NULL,
-  `photo_cover_id` int(11) NOT NULL,
-  `user_id` int(11),
-  FOREIGN KEY(`user_id`) REFERENCES users(`id`),
-  FOREIGN KEY(`photo_cover_id`) REFERENCES photo(`id`),		
   PRIMARY KEY (`id`)
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `photo`
---
 
 CREATE TABLE `photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -79,40 +57,7 @@ CREATE TABLE `photos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
--- --------------------------------------------------------
 
---
--- Table structure for table `album_photo`
---
-
-CREATE TABLE `albums_photos` (
-  `album_id` int(11) NOT NULL,
-  `photo_id` int(11) NOT NULL,
-  FOREIGN KEY (album_id) REFERENCES albums(id),
-  FOREIGN KEY (photo_id) REFERENCES photos(id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_album`
---
-
-CREATE TABLE `users_albums` (
-  `user_id` int(11) NOT NULL,
-  `album_id` int(11) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (album_id) REFERENCES albums(id),
-  PRIMARY KEY (user_id,album_id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_user`
---
 
 CREATE TABLE  `friends` (
   `id_one` int(11) NOT NULL,
@@ -126,7 +71,8 @@ CREATE TABLE  `friends` (
 --
 -- Dummy User....
 -- pw foobar
-insert into users (first_name,last_name,login,email,password,code) VALUES ('ae','ewae','ewaw','ewa@s.com','3858f62230ac3c915f300c664312c63f','ewqewq');
+insert into users (first_name,last_name,login,email,password,code) VALUES ('user_1','a','ewaw','ewa@s.com','3858f62230ac3c915f300c664312c63f','ewqewq');
+insert into users (first_name,last_name,login,email,password,code) VALUES ('user_2','b','ewaw','ewa@s.com','3858f62230ac3c915f300c664312c63f','ewqewq');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

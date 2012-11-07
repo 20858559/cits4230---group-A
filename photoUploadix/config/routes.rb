@@ -48,6 +48,7 @@ PhotoUploadix::Application.routes.draw do
   #
   match  "public_gallery" ,:to => "photos#public_gallery"
 
+  match  "private_gallery" ,:to => "users#private_gallery"
   resources :users do
     resources :photos,:albums
   end
