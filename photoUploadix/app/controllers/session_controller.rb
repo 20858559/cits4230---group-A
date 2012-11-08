@@ -3,7 +3,7 @@ class SessionController < ApplicationController
 
   def create
     #can return many users.. so have to for each and take only first one..retarded
-    @users = User.where("login = ? AND password = ? ",params[:user]['login'], Digest::MD5.hexdigest(params[:user]['password'])).limit(1)
+    @users = User.where("login = ? AND password = ? ",params[:user_login]['login'], Digest::MD5.hexdigest(params[:user]['password'])).limit(1)
     #check if user exists
     if @users.exists?
       @users.each do |user|

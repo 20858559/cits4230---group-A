@@ -16,3 +16,9 @@
 //= require angular.js
 //= require bootstrap
 
+
+function resetErrors(){
+    if($('.messages').length){
+        $('body').find('.messages').remove();
+    }
+}

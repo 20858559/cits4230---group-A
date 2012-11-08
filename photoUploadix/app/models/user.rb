@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :friendships
-  has_many :friends, :through => :friendships
+  has_many :friends
 
 
   #attr_accessor :password
@@ -16,7 +15,7 @@ class User < ActiveRecord::Base
                     :format   => { :with    => /\w+@\w+\.\w+/,
                                    :message => "abc@examples.com" }
 
-
+  validates :login, :uniqueness => true
 
   validates :password,
             :presence     => true,

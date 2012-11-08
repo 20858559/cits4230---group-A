@@ -1,60 +1,57 @@
 class UsersController < ApplicationController
-	#before_filter :authenticate_user!
-
+  #index displays all existing users
   def index
     @users = User.all
   end
-
+  #show displays the informations for one user
   def show
-    #check if logged in user show all
-
+    #get the user with the url
     @user = User.find(params[:id])
-    
-    if session[:user_id].to_s == params[:id]
 
+    #check if user is the one logged in
+    if session[:user_id].to_s == params[:id]
+      #then show all his pictures
       @photos = @user.photos
     else
-      #show only public
-    #  raise ActionController::RoutingError.new('Not Found')
+      #show only public pictures
       @photos = @user.photos.where("is_private = false")
     end
 
   end
-
+  #display the form to create a new user
   def new
     @user = User.new
-    
   end
-
+  #takes care of the user creation
   def create
     @user=User.new(params[:user])
-
-    #abort(@user.inspect)
     if !@user.nil?
-      #generate code
-      login_hash = Digest::MD5.hexdigest(@user.login)
       pw_hash = Digest::MD5.hexdigest(@user.password)
-      first_name_hash = Digest::MD5.hexdigest(@user.first_name)
-      code = (pw_hash[0..4] + login_hash[4..8]+ first_name_hash[4..8])*2
-       
+      #if validation was ok we can update the user
       if @user.save
         #update pw with hash
         @new_user = User.find(@user.id)
         @new_user.password = pw_hash
-        @new_user.code = code[0..4]
+        #set user status to inactive
+        @new_user.status = false;
+        #generate random token for confirmation mail
+        abort(inspect(UUID.timestamp_create().to_s))
         @new_user.save
+        #send the mail
+        Notifier.send_registration_confirmation(@new_user).deliver
         flash[:notice] = "User was successfully created"
         redirect_to "/photoUploadix"
       else
-        render :action => "new"
+        render :action => "/new"
       end
 
     else
-      render :action => "new"
+      render :action => "/new"
     end
 
   end
 
+  #allow to browse friends pictures
   def private_gallery
     if !session[:user_id].nil?
       #get friends
@@ -69,16 +66,17 @@ class UsersController < ApplicationController
   end
 
   def edit
-
-
   end
 
   def update
-
   end
 
+  #deletes a user
   def destroy
-
   end
 
+  #checks that the token is correct, updates the token and activate the user
+  def verify_confirmation
+    
+  end
 end

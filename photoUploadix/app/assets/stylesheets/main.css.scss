@@ -3,3 +3,20 @@
 .clear{
     clear:both;
 }
+
+.floatRight{
+    float:right;
+}
+
+.floatLeft{
+    float:left;
+}
+
+
+.required:after {
+    content:" *";
+}
+
+.error{
+    color:red;
+}

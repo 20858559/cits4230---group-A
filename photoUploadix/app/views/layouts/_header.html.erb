@@ -10,10 +10,6 @@
             <%= link_to 'photoUploadix', root_url,:class=>"brand"  %>
             <div class="nav-collapse collapse">
               <ul class="nav">
-                
-
-
-
               <%  if !session[:user_id].nil? %>
                 <%  params[:user_id] = session[:user_id] %>
                   <li><%= link_to 'Add a photo', "/photoUploadix/users/#{session[:user_id]}/photos/new"  %></li>
@@ -21,7 +17,6 @@
                   <li><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
                   <li><a href="sitemap/sitemap">Sitemap</a></li>
                 </ul>
-
 
               <%=
                   @user = User.find(session[:user_id])
