@@ -42,7 +42,7 @@ class UsersController < ApplicationController
         #send the mail
         Notifier.send_registration_confirmation(@new_user).deliver
         flash[:notice] = "User was successfully created"
-        redirect_to "/photoUploadix"
+        redirect_to :root
       else
         render :action => "/new"
       end
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
   end
 
   #checks that the token is correct, updates the token and activate the user
-  def verify_confirmation
+  def confirm_registration
     
   end
 end

@@ -1,10 +1,14 @@
+<%
+  link = "<a href='"+confirm_registration_user_path(:id => @user.id,:registration_token => @user.registration_token)+"'>Confirm</a>"
+
+%>
+
+
 Hello <%@user.first_name %>,
 
 Photouploadix team would like to thank you for your registration.
 Please click the following link to verify your email address:
-
-<%= url_for(:host => "cits42330f.csse.uwa.edu.au/photoUploadix", :controller => "users", :action => "verif") %>
-<%= @user.registration_token %>
+<%= link %>
 
 If the above URL does not work, try copying and pasting it into your browser.
 

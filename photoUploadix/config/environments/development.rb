@@ -18,11 +18,12 @@ PhotoUploadix::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "ssl://smtp.gmail.com",
-  :port                 => 465,
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
   :user_name            => 'arnaud.moret@gmail.com',
   :password             => 'Nlesskur123-',
-  :authentication       => true
+  :authentication       => 'plain',
+  :enable_starttls_auto => true
    }
 
 config.action_mailer.perform_deliveries = true

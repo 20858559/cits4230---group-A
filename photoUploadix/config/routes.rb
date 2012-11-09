@@ -47,8 +47,14 @@ PhotoUploadix::Application.routes.draw do
   #
   #
   match  "public_gallery" ,:to => "photos#public_gallery"
-
   match  "private_gallery" ,:to => "users#private_gallery"
+
+  resources :users do
+    member do
+       get ':registration_token', to:'users#confirm_registration', as: :confirm_registration
+    end
+  end
+
   resources :users do
     resources :photos,:albums
   end
