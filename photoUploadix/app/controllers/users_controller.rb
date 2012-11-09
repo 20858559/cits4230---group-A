@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   #index displays all existing users
   def index
     @users = User.all
@@ -35,7 +36,8 @@ class UsersController < ApplicationController
         #set user status to inactive
         @new_user.status = false;
         #generate random token for confirmation mail
-        abort(inspect(UUID.timestamp_create().to_s))
+        uuid = UUID.new
+        @new_user.registration_token = uuid.generate
         @new_user.save
         #send the mail
         Notifier.send_registration_confirmation(@new_user).deliver
