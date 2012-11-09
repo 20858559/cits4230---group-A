@@ -1,0 +1,62 @@
+<%#Show all public pictures
+%>
+
+<div class="hero-unit">
+  <h2>Welcome to your public gallery (private pictures of  your friends !</h2>
+  <br /><br />
+
+    <% if !@photos.nil?  %>
+      <div id ="user_gallery">
+      <% @photos.each do |photo| %>
+         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>"/photoUploadix/"+photo.photo.url ),"/photoUploadix/"+photo.photo.url(:large) %>
+
+      <%  end %>
+      </div>
+    <% else %>
+    <br /><br />
+        <%= "No pictures are available at this time." %>
+    <% end %>
+
+
+
+  <br />
+  <br />
+
+</div>
+
+<!-- if pictures..display the gallery -->
+
+<% if@photos.length>0 %>
+
+<script src=" <%= javascript_path('galleria-1.2.8.min.js')  %>" type="text/javascript"></script>
+<script src=" <%= javascript_path('galleria.classic.min.js')  %>" type="text/javascript"></script>
+<script src=" <%= javascript_path('fancybox.js')  %>" type="text/javascript"></script>
+
+<script>
+
+
+	Galleria.loadTheme("<%= javascript_path('galleria.classic.min.js') %>");
+        $('#user_gallery').galleria({
+            extend: function() {
+                this.bind(Galleria.LOADFINISH, function(e) {
+                        $(e.imageTarget).click(this.proxy(function(e) {
+                                e.preventDefault(); // removes the garbage
+                                var obj = this.getData();
+                                  $.fancybox({
+                                        'href': obj.big,
+                                        'title': obj.title,
+                                        'titlePosition' : "inside"
+
+
+                                });
+
+                        }))
+                });
+        }
+    });
+	Galleria.run('#user_gallery');
+
+</script>
+
+  <% end %>
+

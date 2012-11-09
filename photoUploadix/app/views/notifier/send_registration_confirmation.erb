@@ -1,0 +1,12 @@
+Hello <%@user.first_name %>,
+
+Photouploadix team would like to thank you for your registration.
+Please click the following link to verify your email address:
+
+<%= url_for(:host => "cits42330f.csse.uwa.edu.au/photoUploadix", :controller => "users", :action => "verif") %>
+<%= @user.registration_token %>
+
+If the above URL does not work, try copying and pasting it into your browser.
+
+
+For any problems contact support@photouploadix.com.au
