@@ -17,8 +17,8 @@ PhotoUploadix::Application.configure do
   #config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  :address              => "ssl://smtp.gmail.comm",
+  config.action_mailer.smtp_settings = {
+  :address              => "ssl://smtp.gmail.com",
   :port                 => 465,
   :user_name            => 'arnaud.moret@gmail.com',
   :password             => 'Nlesskur123-',
