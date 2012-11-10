@@ -8,7 +8,12 @@ Hello <%@user.first_name %>,
 
 Photouploadix team would like to thank you for your registration.
 Please click the following link to verify your email address:
-<%= link %>
+<%=
+#change host for prod
+  confirm_registration_user_url(:host => 'localhost:3109',:id => @user.id,:registration_token => @user.registration_token)
+
+
+%>
 
 If the above URL does not work, try copying and pasting it into your browser.
 

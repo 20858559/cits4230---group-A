@@ -1,73 +1,39 @@
 PhotoUploadix::Application.routes.draw do
+  #index
   get "site/index"
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # nested route
-  #
-  #
-  #
-  #
+  #galleries root
   match  "public_gallery" ,:to => "photos#public_gallery"
   match  "private_gallery" ,:to => "users#private_gallery"
 
+  #ajax update
+  match  "update_likes", :to =>"likes#update_likes"
+  match  "display_like_button", :to =>"likes#display_like_button"
+
+  #registration confirmation routes
   resources :users do
     member do
        get ':registration_token', to:'users#confirm_registration', as: :confirm_registration
     end
   end
 
+  #users/photos/albums routes
   resources :users do
     resources :photos,:albums
   end
 
+  #session routes
+  match "logout", :to => "session#destroy"
+  match "login", :to => "session#create"
+
+  resources :session
 
 
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
+   #root
    root :to => 'site#index'
 
 
-  # See how all your routes lay out with "rake routes"
-
+  #in case route is not found leave this
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
    match ':controller(/:action(/:id))(.:format)'

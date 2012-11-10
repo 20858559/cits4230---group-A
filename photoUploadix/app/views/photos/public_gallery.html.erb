@@ -9,14 +9,33 @@
     <% if !@photos.nil?  %>
       <div id ="user_gallery">
       <% @photos.each do |photo| %>
-         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>"/photoUploadix/"+photo.photo.url ),"/photoUploadix/"+photo.photo.url(:large) %>
+         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>photo.photo.url ),photo.photo.url(:large) %>
+
 
       <%  end %>
+        
+
       </div>
+      <br />
+      <div class="social" >
+        <ul class="social-menu">
+          <li>
+              <button class="btn  input-prepend" id="photouploadix_like"  >
+                
+              </button>
+          </li>
+          <li>
+            <div id="fb-like" ></div>
+          </li>
+        </ul>
+        
+      </div>
+
     <% else %>
     <br /><br />
         <%= "No pictures are available at this time." %>
     <% end %>
+
 
   
 
@@ -35,6 +54,59 @@
 
 <script>
 
+//http://support.galleria.io/discussions/questions/771-share-a-photo-in-the-gallery-with-facebook
+//have to add link to actual picture
+var fb_like = function(){
+    $('#fbiframe').remove();
+    $('<iframe id= "fblike" scrolling="no" frameborder="0" style="width: 300px; height: 80px;'+
+    '" src="http://www.facebook.com/widgets/like.php?href='+
+    encodeURIComponent(location.href)+
+    '&amp;send=false&amp;layout=button_count&amp;'+
+    'show_faces=false&amp;action=like'+
+    '"></iframe>').appendTo('#fb-like');
+}
+
+function get_photo_id(img_source){
+  //get photo id
+  //http://localhost:3109/files/1/photos/2/large/hd.png?1352559525
+  //http:\/\/[A-Za-z]*:[0-9]{0,4}\/files/[0-9]+\/photos\/([0-9]+)\/
+  var expression = /http:\/\/[A-Za-z]*:[0-9]{0,4}\/files\/[0-9]+\/photos\/([0-9]+)./i;
+  var regex = new RegExp(expression);
+  var match=regex.exec(img_source);
+  return match[1];
+}
+
+function display_like_button(cur_photo_id){
+  
+  $.ajax({
+  url: '/display_like_button',
+  data: {
+    "cur_photo_id" : cur_photo_id
+    },
+    success: function(data) {
+      $("#photouploadix_like").html(data);
+      
+    }
+  });
+
+  
+
+}
+function update_likes(cur_photo_id){
+ $.ajax({
+  url: '/update_likes',
+  data: {
+    "cur_photo_id" : cur_photo_id
+    },
+    success: function(data) {
+      display_like_button(cur_photo_id);
+    }
+  });
+
+  
+}
+
+
 
 	Galleria.loadTheme("<%= javascript_path('galleria.classic.min.js') %>");
         $('#user_gallery').galleria({
@@ -51,8 +123,15 @@
 
                                 });
 
-                        }))
+                        }));
+                        var cur_photo_id = get_photo_id(e.imageTarget.src);
+                        //$("#photouploadix_like").attr("photo_id",cur_photo_id);
+                        display_like_button(cur_photo_id);
+                        $("#photouploadix_like").live ("click", function(){
+                          update_likes(cur_photo_id);
+                        });
                 });
+                 fb_like()  ;
         }
     });
 	Galleria.run('#user_gallery');

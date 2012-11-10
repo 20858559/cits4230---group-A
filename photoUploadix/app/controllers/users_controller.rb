@@ -79,6 +79,15 @@ class UsersController < ApplicationController
 
   #checks that the token is correct, updates the token and activate the user
   def confirm_registration
-    
+    @user = User.find(params[:id])
+    if @user.registration_token.eql?(params[:registration_token])
+      #tokens match.. change user status and destroy token
+      @user.status = true
+      @user.registration_token = ""
+      @user.save
+      flash[:notice] = "Congratulations " + @user.login + ". Your account was successfully activated!"
+    else
+      flash[:error] = "Sorry the tokens mismatch, please make sure that you are accessing the correct link."  
+    end
   end
 end

@@ -1,43 +1,19 @@
 <header>
   <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </a>
-            <%= link_to 'photoUploadix', root_url,:class=>"brand"  %>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-              <%  if !session[:user_id].nil? %>
-                <%  params[:user_id] = session[:user_id] %>
-                  <li><%= link_to 'Add a photo', "/photoUploadix/users/#{session[:user_id]}/photos/new"  %></li>
-                  <li><%= link_to "Public gallery", public_gallery_path  %> </li>
-                  <li><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
-                  <li><a href="sitemap/sitemap">Sitemap</a></li>
-                </ul>
+    <div class="navbar-inner">
+      <div class="container">
+          <%= link_to 'photoUploadix', root_url,:class=>"brand btn-link btn"  %>
+          <%=
 
-              <%=
-                  @user = User.find(session[:user_id])
-                  welcome_text = "Welcome, " + @user.first_name + " " + @user.last_name
-                  welcome_text += "&nbsp;&nbsp;"
-                  welcome_text += link_to 'Logout', '/photoUploadix/session/destroy',:class=>'btn btn-primary btn-large'
-                  simple_format( welcome_text, :class => 'navbar-form pull-right' )
+            if current_user
+              render :partial => 'site/header_logged_in'
+            else
+              render :partial => 'site/header_not_logged'
+            end
 
-              %>
-              <%else%>
-              <li><a href="sitemap/sitemap">Sitemap</a></li>
-            </ul>
-              <%=
-                render :partial => 'users/login'
-              %>
-              <%
-                end
-              %>
+          %>
 
-            </div><!--/.nav-collapse -->
-          </div>
-        </div>
+      </div>
+    </div>
   </div>
 </header>

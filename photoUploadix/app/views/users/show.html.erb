@@ -1,27 +1,30 @@
 <div class="hero-unit">
+  <!-- user s public informations-->
   <h2> <%= @user.first_name %> <%= @user.last_name %> 's photos </h2>
   <br /><br />
   <div id="user_infos">
     <div id="user_labels">
       <span class="label">Login</span> <br />
       <span class="label">Email</span> <br />
-      <span class="label">Code</span> <br />
+      <span class="label">First Name</span> <br />
+      <span class="label">Last Name</span> <br />
     </div>
     <div id ="user_data">
       <span class="data"><%= @user.login %> </span> <br />
       <span class="data"><%= @user.email %></span> <br />
-      <span class="data"><%= @user.code %></span> <br />
+      <span class="data"><%= @user.first_name %></span> <br />
+      <span class="data"><%= @user.last_name %></span> <br />
     </div>
 
   </div>
 
   <div class="clear"></div>
   <br /><br />
-
+  <!-- user s public gallery-->
     <% if@photos.length>0 %>
       <div id ="user_gallery">
       <% @photos.each do |photo| %>
-         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>"/photoUploadix/"+photo.photo.url ),"/photoUploadix/"+photo.photo.url(:large) %>
+         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>photo.photo.url ),photo.photo.url(:large) %>
 
       <%  end %>
       </div>
@@ -34,7 +37,7 @@
   <br />
   <br />
 
-  <%= link_to "Home",user_path(@user)  %>
+  <%= link_to "Users",users_path()  %>
 </div>
 
 <!-- if pictures..display the gallery -->

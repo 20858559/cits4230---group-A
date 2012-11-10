@@ -12,11 +12,11 @@ class PhotosController < ApplicationController
 
 
   def public_gallery
-
     #list of photos
-
     @photos = Photo.where("is_private = false")
   end
+
+  
   
 
   def show
@@ -34,7 +34,7 @@ class PhotosController < ApplicationController
     #@photo.user_id = 1
     if @photo.save
       flash[:notice] = "Successfully uploaded photo."
-      redirect_to "/photoUploadix/users/#{session[:user_id]}"
+      redirect_to user_path(session[:user_id])
     else
       @photo.photo = nil
       render :action => "new"

@@ -17,10 +17,24 @@
 
 
 .registrationLeftColumn{
-    width:30%;
+    width:50%;
 }
-
 .registrationRightColumn{
     width:50%;
 }
+
+
+.registrationLeftColumn  .control-label,.registrationRightColumn  .control-label {
+    width:90px;
+}
+
+.registrationLeftColumn  .controls,.registrationRightColumn  .controls {
+    margin-left:100px;
+}
+
+.registrationRightColumn  .control-group{
+    
+    width:50%;
+}
+
 

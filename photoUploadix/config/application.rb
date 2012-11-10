@@ -62,6 +62,9 @@ module PhotoUploadix
     #paperclip options
     #config.paperclip_defaults = {:storage => :fog, :fog_credentials => {:provider => "Local", :local_root => "#{Rails.root}/public/files"}, :fog_directory => "", :fog_host => "localhost"}
 
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+  "#{html_tag}".html_safe
+}
 
   end
 end
