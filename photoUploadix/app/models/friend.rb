@@ -1,4 +1,5 @@
-class Friends < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :friend, class_name => "User"
+class Friend < ActiveRecord::Base
+  #list of accessible attributes
+	attr_accessible :id,:id_one,:id_two,:status,:modification_date
+
 end

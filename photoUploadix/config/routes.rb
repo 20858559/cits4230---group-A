@@ -17,6 +17,18 @@ PhotoUploadix::Application.routes.draw do
     end
   end
 
+  resources :users do
+     resources :friends do
+       member do
+        get 'confirm', to:'friends#confirm', as: :confirm
+	get 'confirm_ok', to:'friends#confirm_ok', as: :confirm_ok
+	get 'confirm_ko', to:'friends#confirm_ko', as: :confirm_ko
+
+       end
+    end
+  end
+	
+
   #users/photos/albums routes
   resources :users do
     resources :photos,:albums

@@ -1,0 +1,6 @@
+<%user = User.find(params[:id])%>
+<div class="hero-unit">
+  <h3>Would you like to be friend with <%= user.first_name%> <%=user.last_name%></h3>
+    <%=link_to " Yes", confirm_ok_user_friend_path(:user_id => current_user.id,:id =>params[:id]) ,:class=>"btn btn-mini"%>
+    <%=link_to "No",confirm_ko_user_friend_path(:user_id => current_user.id,:id =>params[:id])  ,:class=>"btn btn-mini"%>
+</div>

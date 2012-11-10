@@ -1,7 +1,22 @@
+<%
+  feed = user_feed
+  requests = user_requests
+%>
 <div class="btn-toolbar pull-left"  style="display:inline">
   <div class="btn-group">
-    <a class="btn btn-mini" data-toggle="collapse" data-target=".nav-collapse" href="#"><i class="icon-info-sign"></i></a>
-    <a class="btn btn-mini" data-toggle="collapse" data-target=".nav-collapse" href="#"><i class="icon-user"></i></a>
+    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown"  href="#"><i class="icon-info-sign"></i></a>
+    <ul class="dropdown-menu pull-left">
+    <%user_feed.each do |item|%>
+      <li ><a href="#"><%= item %></a> </li>    <%end%>
+    </ul>
+  </div>
+  <div class="btn-group">
+    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
+    <ul class="dropdown-menu pull-left">
+      <%user_requests.each do |item|%>
+        <li ><a href="<%=confirm_user_friend_path(:user_id => current_user.id,:id =>item['friend_id']) %> "><%= item['text'] %></a> </li>
+    <%end%>
+    </ul>
   </div>
 </div>
 <ul class="nav">
@@ -11,10 +26,10 @@
       Browse Pictures
       <span class="caret"></span>
     </a>
-      <ul class="dropdown-menu pull-right">
-        <li class="pull-right"><%= link_to "Public gallery", public_gallery_path  %> </li>
-        <li class="pull-right"><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
-      </ul>
+    <ul class="dropdown-menu pull-right">
+      <li class="pull-right"><%= link_to "Public gallery", public_gallery_path  %> </li>
+      <li class="pull-right"><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
+    </ul>
   </li>
   <li><%= link_to 'Profile', user_path(current_user.id),:class =>'btn btn-link'  %></li>
 </ul>

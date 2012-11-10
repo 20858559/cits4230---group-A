@@ -13,7 +13,7 @@ class LikesController < ApplicationController
   def update_likes
     user_like = Like.where("photo_id=? AND user_id=?",params[:cur_photo_id],current_user.id).limit(1)
     if user_like.length >0
-      #if line delete the line
+      #if line delete the line .first..
       Like.delete(user_like[0].id.to_s)
     else
       #if no line add a line
