@@ -10,6 +10,9 @@ class Photo < ActiveRecord::Base
   attr_accessible :photo_file_size
   attr_accessible :photo_updated_at
 
+  attr_accessible :latitude
+  attr_accessible :longitude
+
 
   #link table
   belongs_to :user

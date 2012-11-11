@@ -1,10 +1,6 @@
-<%
-  feed = user_feed
-  requests = user_requests
-%>
 <div class="btn-toolbar pull-left"  style="display:inline">
   <div class="btn-group">
-    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown"  href="#"><i class="icon-info-sign"></i></a>
+    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown"   href="#"><i class="icon-info-sign"></i></a>
     <ul class="dropdown-menu pull-left">
     <%user_feed.each do |item|%>
       <li ><a href="#"><%= item %></a> </li>    <%end%>
@@ -21,24 +17,35 @@
 </div>
 <ul class="nav">
   <li><%= link_to 'Add a photo', new_user_photo_path(current_user.id),:class =>'btn btn-link'  %></li>
-  <li>
-    <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+  <li class="dropdown">
+    <a href="#" class="btn btn-link dropdown-toggle" id="galleries" role="button" data-toggle="dropdown">
       Browse Pictures
       <span class="caret"></span>
     </a>
-    <ul class="dropdown-menu pull-right">
-      <li class="pull-right"><%= link_to "Public gallery", public_gallery_path  %></li>
-      <li class="pull-right"><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
+    <ul class="dropdown-menu" aria-labelledby="galleries"  role="menu">
+      <li><%= link_to "Public gallery", public_gallery_path  %></li>
+      <li><%= link_to 'Browse your friends pictures', private_gallery_path  %></li>
     </ul> 
   </li>
   <li><%= link_to 'Profile', user_path(current_user.id),:class =>'btn btn-link'  %></li>
+  <li class="dropdown">
+    <a href="#" class="btn btn-link dropdown-toggle" id="friends" role="button" data-toggle="dropdown">
+      Manage your friends
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="friends">
+      <li><%= link_to "Add new friends", users_path  %></li>
+      <li><%= link_to 'See your friends', user_friends_path(current_user.id)  %></li>
+
+    </ul>
+  </li>
 </ul>
 
 <%=
-    welcome_text = "Welcome, " + current_user.first_name + " " + current_user.last_name
+    welcome_text = "Welcome, " + current_user.login
     welcome_text += "&nbsp;&nbsp;"
     welcome_text += link_to 'Logout', logout_path,:class=>'btn btn-primary btn-large'
-    simple_format( welcome_text, :class => 'navbar-form pull-right' )
+    simple_format( welcome_text, :class => 'navbar-text pull-right fix-padding' )
 
 %>
 

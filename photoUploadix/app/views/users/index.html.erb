@@ -6,16 +6,19 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th></th>
+      <th>Action</th>
       <th></th>
 
     </tr>
 
   <% @users.each do |user| %>
-    <tr>
-      <td><%= user.first_name %></td>
+    <tr id="user_<%= user.id %>">
+      <td><%= user.first_name + " " + user.last_name  %></td>
       <td><%= user.email %></td>
       <td><%= link_to 'Show', user %></td>
+      <% if current_user %>
+      <td><a class="btn btn-small send_request" href="#"  user_id="<%= user.id %> " >Send a friend request</a></td>
+      <% end %>
     </tr>
   <% end %>
 
@@ -24,3 +27,19 @@
   <br />
 </div>
 
+<script>
+  $('.send_request').click(function(){
+    console.log($(this).attr('user_id'));
+    var friend_id =$(this).attr('user_id');
+      $.ajax({
+      url: '/users/'+<%=current_user.id%>+'/friends/'+ $(this).attr('user_id')   ,
+    type:'POST',
+      success: function(data,event,request) {
+        var msg = request.getResponseHeader('X-Message');
+        var type = request.getResponseHeader('X-Message-Type');
+        show_ajax_message(msg, type); //use whatever popup, notification or whatever plugin you want
+        $('body').find('#user_'+friend_id).remove();
+      }
+    });
+  });
+</script>

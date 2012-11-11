@@ -2,7 +2,12 @@ class UsersController < ApplicationController
 
   #index displays all existing users
   def index
-    @users = User.all
+    if current_user
+      @users = User.where("id <> ? AND NOT EXISTS(SELECT id_one FROM friends WHERE id_one = ? )",current_user.id,current_user.id)
+    else
+      @users = User.all
+    end
+    
   end
   #show displays the informations for one user
   def show
@@ -57,7 +62,7 @@ class UsersController < ApplicationController
   def private_gallery
     if !session[:user_id].nil?
       #get friends
-      @photos = Photo.joins("INNER JOIN users ON  users.id= photos.user_id INNER JOIN friends ON users.id = friends.id_two   ").where("id_one="+session[:user_id].to_s).where("photos.is_private = true")
+      @photos = Photo.joins("INNER JOIN users ON  users.id= photos.user_id INNER JOIN friends ON users.id = friends.id_two   ").where("id_one= ? AND photos.is_private = true AND friends.relationship =1 ",session[:user_id].to_s)
       #get their photos
 
     else
@@ -79,7 +84,7 @@ class UsersController < ApplicationController
 
   #checks that the token is correct, updates the token and activate the user
   def confirm_registration
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     if @user.registration_token.eql?(params[:registration_token])
       #tokens match.. change user status and destroy token
       @user.status = true

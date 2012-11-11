@@ -21,16 +21,20 @@
     <!-- Header -->
     <%= render 'layouts/header' %>
     <!-- Error handling -->
+    <div id="flash-messages">
     <% if not @messages_rendered -%>
       <% if flash[:error] -%>
+
         <p class='alert alert-error'><%=h flash[:error] %></p>
       <% end -%>
-         <% if flash[:notice] -%>
-        <p class='alert'><%=h flash[:notice] %></p>
+      <% if flash[:notice] -%>
+        <p class='alert alert-success'><%=h flash[:notice] %></p>
       <% end -%>
+   
 
     <% end -%>
     <% @messages_rendered = true -%>
+    </div>
     <!-- view content -->
     <div class="container">
       <%= yield %>

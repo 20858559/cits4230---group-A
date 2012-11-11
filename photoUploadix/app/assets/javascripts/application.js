@@ -22,3 +22,36 @@ function resetErrors(){
         $('body').find('.messages').remove();
     }
 }
+
+var fade_flash = function() {
+    $("#flash_notice").delay(5000).fadeOut("slow");
+    $("#flash_alert").delay(5000).fadeOut("slow");
+    $("#flash_error").delay(5000).fadeOut("slow");
+};
+fade_flash();
+
+var show_ajax_message = function(msg, type) {
+    if(type == 'notice'){
+        $("#flash-messages").html('<div class="alert alert-success" id="flash_'+type+'">'+msg+'</div>');
+    }
+    else{
+        $("#flash-messages").html('<div class="alert alert-error" id="flash_'+type+'">'+msg+'</div>');
+    }
+    
+    fade_flash();
+};
+
+$(document).ready(function(){
+    console.log("ready");
+
+    //ajax errors
+    $(document).ajaxError(function(e, jqxhr, settings, exception) {
+        console.log(exception);
+    });
+
+    //success
+    $("#flash-message").ajaxComplete(function(event, request) {
+        
+    });
+});
+

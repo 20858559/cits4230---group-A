@@ -23,7 +23,7 @@ class LikesController < ApplicationController
       like.modification_date = Time.now.getutc
       like.save
     end
-
+    
     render :text => "OK"
     
 

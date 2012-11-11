@@ -10,19 +10,21 @@ PhotoUploadix::Application.routes.draw do
   match  "update_likes", :to =>"likes#update_likes"
   match  "display_like_button", :to =>"likes#display_like_button"
 
-  #registration confirmation routes
+   #registration confirmation routes
   resources :users do
-    member do
-       get ':registration_token', to:'users#confirm_registration', as: :confirm_registration
+    scope "/confirm" do
+       get ':registration_token', :to => 'users#confirm_registration', :as => :confirm_registration
     end
   end
 
+ 
   resources :users do
      resources :friends do
        member do
-        get 'confirm', to:'friends#confirm', as: :confirm
-	get 'confirm_ok', to:'friends#confirm_ok', as: :confirm_ok
-	get 'confirm_ko', to:'friends#confirm_ko', as: :confirm_ko
+        post 'create', :to => 'friends#create', :as => :create
+        get 'confirm', :to => 'friends#confirm', :as => :confirm
+        get 'confirm_ok',:to => 'friends#confirm_ok', :as => :confirm_ok
+        get 'confirm_ko', :to => 'friends#confirm_ko', :as => :confirm_ko
 
        end
     end

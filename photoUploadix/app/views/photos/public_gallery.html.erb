@@ -9,7 +9,7 @@
     <% if !@photos.nil?  %>
       <div id ="user_gallery">
       <% @photos.each do |photo| %>
-         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>photo.photo.url ),photo.photo.url(:large) %>
+         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description+" uploaded at latitude:"+photo.latitude.to_s+" longitude:"+photo.longitude.to_s,"data-title"=>photo.photo_file_name,"data-big"=>photo.photo.url ),photo.photo.url(:large) %>
 
 
       <%  end %>
