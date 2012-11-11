@@ -3,7 +3,7 @@ class Photo < ActiveRecord::Base
 	attr_accessible :id
 	attr_accessible :description
 	attr_accessible :is_private
-  attr_accessible :user_name
+  attr_accessible :user_id
   #paper clip
   attr_accessible :photo_file_name
   attr_accessible :photo_content_type

@@ -1,13 +1,14 @@
 class LikesController < ApplicationController
   def display_like_button
-     likes = Like.where("photo_id=?",params[:cur_photo_id])
+     likes = Like.where("photo_id=?",params[:cur_photo_id]).count
      user_like = Like.where("photo_id=? AND user_id=?",params[:cur_photo_id],current_user.id).count
      if user_like == 0
+
        like_status = "Like this picture"
      else
        like_status = "Unlike this picture"
      end
-     render :text => "<span class='add-on' ><i class='icon-briefcase'></i></span>&nbsp;#{like_status}&nbsp;&nbsp;#{likes.length} likes  "
+     render :text => "<span class='add-on' ><i class='icon-briefcase'></i></span>&nbsp;#{like_status}&nbsp;&nbsp;#{likes} likes  "
   end
 
   def update_likes

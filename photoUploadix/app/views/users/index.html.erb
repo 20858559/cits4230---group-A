@@ -32,7 +32,7 @@
     console.log($(this).attr('user_id'));
     var friend_id =$(this).attr('user_id');
       $.ajax({
-      url: '/users/'+<%=current_user.id%>+'/friends/'+ $(this).attr('user_id')   ,
+      url: '/photoUploadix/users/'+<%=current_user.id%>+'/friends/'+ $(this).attr('user_id')   ,
     type:'POST',
       success: function(data,event,request) {
         var msg = request.getResponseHeader('X-Message');

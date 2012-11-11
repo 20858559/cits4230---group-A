@@ -9,24 +9,18 @@
   <legend>
      <input type="hidden" id="latitude" name="photo[latitude]"/>
     <input type="hidden" id="longitude" name="photo[longitude]" />
-    <div class="clearfix">
       <%= f.label :description  %>
       <div class="input">
         <%= f.text_field :description,:placeholder=>"Description","data-validation"=>"required" %>
       </div>
-    </div>
-    <div class="clearfix">
       <%= f.label :is_it_private?  %>
       <div class="input">
         <%= f.check_box :is_private,{} %>
       </div>
-    </div>
-    <div class="clearfix">
       <%= f.label :Select_your_photo  %>
       <div class="input">
         <%= f.file_field :photo %>
       </div>
-    </div>
    
 
     <%= f.submit "Upload your photo",{:id =>"uploadPhoto" } %>

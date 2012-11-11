@@ -4,8 +4,13 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one:
+  photo_file_name: "home_page.jpg"
+  description: "First test"
+
 # column: value
 #
-two: {}
+two:
+  photo_file_name: "home_page.zip"
+  description: "Second test"
 #  column: value

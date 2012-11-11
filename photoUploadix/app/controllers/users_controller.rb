@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   #index displays all existing users
   def index
     if current_user
-      @users = User.where("id <> ? AND NOT EXISTS(SELECT id_one FROM friends WHERE id_one = ? )",current_user.id,current_user.id)
+      @users = User.where("users.id <> ? AND ID NOT in (SELECT id_one from friends WHERE id_one=? OR id_two =? )
+        AND id NOT IN (SELECT id_two FROM friends WHERE id_one =? OR id_two = ? )
+        ",current_user.id,current_user.id,current_user.id,current_user.id,current_user.id)
     else
       @users = User.all
     end

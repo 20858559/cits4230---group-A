@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   
 
   #attr_accessor :password
-  attr_accessible :name,:password,:email,:id,:login,:first_name,:last_name,:password_confirmation
+  attr_accessible :name,:password,:email,:id,:login,:first_name,:last_name,:password_confirmation,:registration_token,:status
 
   attr_accessor :password_confirmation
 
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
       return user, "Invalid login or password"
     else
       if  user.status == false
-        return user, "User is not activated yet"
+        return user, "Your account has not been activated yet. You should have received an activation email. Check your spam folder."
       else
         if user && user.password.eql?( Digest::MD5.hexdigest(password))       
           return user,""

@@ -8,11 +8,14 @@
     <% if !@photos.nil?  %>
       <div id ="user_gallery">
       <% @photos.each do |photo| %>
-         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description,"data-title"=>photo.photo_file_name,"data-big"=>photo.photo.url ),photo.photo.url(:large) %>
+         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description+" uploaded at latitude:"+photo.latitude.to_s+" longitude:"+photo.longitude.to_s,"data-title"=>photo.photo_file_name,"data-big"=>"/photoUploadix"+photo.photo.url ),"/photoUploadix"+ photo.photo.url(:large) %>
 
       <%  end %>
         <br />
-      <div class="social" >
+      
+        
+      </div>
+  <div class="social" >
         <ul class="social-menu">
           <li>
               <button class="btn  input-prepend" id="photouploadix_like"  >
@@ -23,8 +26,6 @@
             <div id="fb-like" ></div>
           </li>
         </ul>
-      </div>
-        
       </div>
     <% else %>
     <br /><br />
@@ -65,7 +66,8 @@ function get_photo_id(img_source){
   //get photo id
   //http://localhost:3109/files/1/photos/2/large/hd.png?1352559525
   //http:\/\/[A-Za-z]*:[0-9]{0,4}\/files/[0-9]+\/photos\/([0-9]+)\/
-  var expression = /http:\/\/[A-Za-z]*:[0-9]{0,4}\/files\/[0-9]+\/photos\/([0-9]+)./i;
+  //var expression = /http:\/\/[A-Za-z]*:[0-9]{0,4}\/files\/[0-9]+\/photos\/([0-9]+)./i;
+  var expression = /http:\/\/[A-Za-z\.0-9]*\/photoUploadix\/files\/[0-9]+\/photos\/([0-9]+)./i;
   var regex = new RegExp(expression);
   var match=regex.exec(img_source);
   return match[1];
@@ -74,7 +76,7 @@ function get_photo_id(img_source){
 function display_like_button(cur_photo_id){
 
   $.ajax({
-  url: '/display_like_button',
+  url: '/photoUploadix/display_like_button',
   data: {
     "cur_photo_id" : cur_photo_id
     },
@@ -89,7 +91,7 @@ function display_like_button(cur_photo_id){
 }
 function update_likes(cur_photo_id){
  $.ajax({
-  url: '/update_likes',
+  url: '/photoUploadix/update_likes',
   data: {
     "cur_photo_id" : cur_photo_id
     },

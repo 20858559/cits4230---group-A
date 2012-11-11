@@ -1,6 +1,47 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+<div class ="hero-unit">
+  <h1>Listing users</h1>
+  <br /><br />
 
-<%= "index.html" %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+      <th></th>
+
+    </tr>
+
+  <% @friends.each do |user| %>
+    <tr id="user_<%= user.id %>">
+      <td><%= user.first_name + " " + user.last_name  %></td>
+      <td><%= user.email %></td>
+      <td><%= link_to 'Show', user %></td>
+      <% if current_user %>
+      <% friend = Friend.where("id_one = ? AND id_two = ?",current_user.id,user.id) %>
+      <td><%= link_to 'Remove friend', user_friend_path(:user_id=>current_user.id,:id=>user.id), :confirm => 'Are you sure?',
+                                     :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+
+  </table>
+
+  <br />
+</div>
+
+<script>
+  $('.delete_request').click(function(){
+    console.log($(this).attr('user_id'));
+    var friend_id =$(this).attr('user_id');
+      $.ajax({
+      url: '/photoUploadix/users/'+<%=current_user.id%>+'/friends/'+ $(this).attr('user_id')   ,
+    type:'DELETE',
+      success: function(data,event,request) {
+        var msg = request.getResponseHeader('X-Message');
+        var type = request.getResponseHeader('X-Message-Type');
+        show_ajax_message(msg, type); //use whatever popup, notification or whatever plugin you want
+        $('body').find('#user_'+friend_id).remove();
+      }
+    });
+  });
+</script>

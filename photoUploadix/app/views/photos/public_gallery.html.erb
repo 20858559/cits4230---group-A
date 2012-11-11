@@ -9,7 +9,7 @@
     <% if !@photos.nil?  %>
       <div id ="user_gallery">
       <% @photos.each do |photo| %>
-         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description+" uploaded at latitude:"+photo.latitude.to_s+" longitude:"+photo.longitude.to_s,"data-title"=>photo.photo_file_name,"data-big"=>photo.photo.url ),photo.photo.url(:large) %>
+         <%= link_to image_tag( photo.photo.url(:thumb),"data-description"=>photo.description+" uploaded at latitude:"+photo.latitude.to_s+" longitude:"+photo.longitude.to_s,"data-title"=>photo.photo_file_name,"data-big"=>"/photoUploadix"+photo.photo.url ),"/photoUploadix"+photo.photo.url(:large) %>
 
 
       <%  end %>
@@ -70,7 +70,8 @@ function get_photo_id(img_source){
   //get photo id
   //http://localhost:3109/files/1/photos/2/large/hd.png?1352559525
   //http:\/\/[A-Za-z]*:[0-9]{0,4}\/files/[0-9]+\/photos\/([0-9]+)\/
-  var expression = /http:\/\/[A-Za-z]*:[0-9]{0,4}\/files\/[0-9]+\/photos\/([0-9]+)./i;
+  //var expression = /http:\/\/[A-Za-z]*:[0-9]{0,4}\/files\/[0-9]+\/photos\/([0-9]+)./i;
+  var expression = /http:\/\/[A-Za-z\.0-9]*\/photoUploadix\/files\/[0-9]+\/photos\/([0-9]+)./i;
   var regex = new RegExp(expression);
   var match=regex.exec(img_source);
   return match[1];
@@ -79,7 +80,7 @@ function get_photo_id(img_source){
 function display_like_button(cur_photo_id){
   
   $.ajax({
-  url: '/display_like_button',
+  url: '/photoUploadix/display_like_button',
   data: {
     "cur_photo_id" : cur_photo_id
     },
@@ -94,7 +95,7 @@ function display_like_button(cur_photo_id){
 }
 function update_likes(cur_photo_id){
  $.ajax({
-  url: '/update_likes',
+  url: '/photoUploadix/update_likes',
   data: {
     "cur_photo_id" : cur_photo_id
     },
@@ -127,6 +128,7 @@ function update_likes(cur_photo_id){
                         var cur_photo_id = get_photo_id(e.imageTarget.src);
                         //$("#photouploadix_like").attr("photo_id",cur_photo_id);
                         display_like_button(cur_photo_id);
+                        console.log(cur_photo_id);
                         $("#photouploadix_like").live ("click", function(){
                           update_likes(cur_photo_id);
                         });
