@@ -30,16 +30,21 @@ class User < ActiveRecord::Base
 
   def self.authenticate(login, password)
     user = find_by_login(login)
-    if  user.status == false
-      1
+    if user == nil
+      return user, "Invalid login or password"
     else
-      if user && user.password.eql?( Digest::MD5.hexdigest(password))
-          user
+      if  user.status == false
+        return user, "User is not activated yet"
       else
-        2
+        if user && user.password.eql?( Digest::MD5.hexdigest(password))       
+          return user,""
+        else
+          return user, "Invalid login or password"
+        end
       end
-      
     end
+ 
+          
   end
 
 

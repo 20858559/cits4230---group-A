@@ -1,20 +1,13 @@
 class SessionController < ApplicationController
   def create
-    user = User.authenticate(params[:user_login]['login'],params[:user_login]['password'])
+    user, message = User.authenticate(params[:user_login]['login'],params[:user_login]['password'])
     #check if user exists
-  
-    if user.id?
+    if message.eql?("")
         session[:user_id] = user.id
-        flash[:notice] = "Logged in"
         redirect_to user_path(session[:user_id])
+        flash[:notice] = "Logged in"
     else
-      case user
-        when 1
-          msg = "User is not activated yet"
-        when 2
-          msg = "Invalid login or password"
-      end
-      flash[:error] = msg
+      flash[:error] = message
       redirect_to :root
     end
      
